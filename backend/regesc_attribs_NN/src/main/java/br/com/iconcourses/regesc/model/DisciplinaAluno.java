@@ -25,26 +25,33 @@ public class DisciplinaAluno {
 
 	@ManyToOne
 	@JoinColumn(name="disciplina_fk", nullable=false)
-    @JsonBackReference // Anotação para resolver serialização bidirecional
+    @JsonBackReference(value="disciplina_disciplinaAluno") // Anotação para resolver serialização bidirecional
 	private Disciplina disciplina;
 	
 	@ManyToOne
 	@JoinColumn(name="aluno_fk", nullable=true)
-    @JsonBackReference // Anotação para resolver serialização bidirecional
+    @JsonBackReference(value="aluno_disciplinaAluno") // Anotação para resolver serialização bidirecional
 	private Aluno aluno;
 	
 	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date data;
+	
 
-	public DisciplinaAluno(Disciplina disciplina, Aluno aluno, Date data) {
+	public DisciplinaAluno() {
 		super();
+	}
+
+
+	public DisciplinaAluno(Long id, Disciplina disciplina, Aluno aluno, Date data) {
+		super();
+		this.id = id;
 		this.disciplina = disciplina;
 		this.aluno = aluno;
 		this.data = data;
 	}
-	
-	
+
+
 
 	/**
 	 * @return the id

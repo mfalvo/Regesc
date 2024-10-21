@@ -25,7 +25,7 @@ public class Professor {
 	@Column(nullable = false)
 	private String prontuario;
 	@OneToMany(mappedBy="professor", fetch=FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value="professor_disciplina")
 	private Set<Disciplina> disciplinas;
 	
 	public Professor() {

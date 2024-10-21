@@ -30,12 +30,12 @@ public class Disciplina {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name ="idprofessor", nullable = true)
-	@JsonBackReference
+	@JsonBackReference(value="professor_disciplina")
 	private Professor professor;
 	
 	 
     @OneToMany(mappedBy = "disciplina", fetch = FetchType.EAGER)
-    @JsonManagedReference // Anotação para resolver serialização bidirecional
+    @JsonManagedReference(value="disciplina_disciplinaAluno") // Anotação para resolver serialização bidirecional
     private Set<DisciplinaAluno> disciplinaAlunos;
 
 	public Disciplina() {

@@ -25,7 +25,7 @@ public class Aluno {
 		private String nome;
 		private Integer idade;
 		@OneToMany(mappedBy="aluno", fetch=FetchType.EAGER)
-		@JsonManagedReference
+		@JsonManagedReference(value = "aluno_disciplinaAluno")
 		private Set<DisciplinaAluno> disciplinaAlunos;
 
 
