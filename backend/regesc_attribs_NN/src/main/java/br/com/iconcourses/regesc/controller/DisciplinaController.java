@@ -25,6 +25,28 @@ public class DisciplinaController {
 
 	@Autowired
     private DisciplinaRepository disciplinaRepository;
+	
+	@Autowired
+	private AlunoRepository alunoRepository;
+
+	
+	@PostMapping("/{disciplinaId}/alunos/{alunoId}")
+    public ResponseEntity<Disciplina> addAlunoToDisciplina(@PathVariable Long disciplinaId, @PathVariable Long alunoId) {
+        Optional<Disciplina> disciplinaOpt = disciplinaRepository.findById(disciplinaId);
+        Optional<Aluno> alunoOpt = alunoRepository.findById(alunoId);
+
+        if (!disciplinaOpt.isPresent() || !alunoOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Disciplina disciplina = disciplinaOpt.get();
+        Aluno aluno = alunoOpt.get();
+        
+        disciplina.getAluno().add(aluno);
+        disciplinaRepository.save(disciplina);
+
+        return ResponseEntity.ok(disciplina);
+    }
 
     @GetMapping
     public Iterable<Disciplina> getAll() {

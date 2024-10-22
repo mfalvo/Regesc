@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,24 +21,27 @@ public class Professor {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(nullable = false)
 	private String nome;
+	
 	@Column(nullable = false)
 	private String prontuario;
-	@OneToMany(mappedBy="professor", fetch=FetchType.EAGER)
-	@JsonManagedReference(value="professor_disciplina")
-	private Set<Disciplina> disciplinas;
+	
+	@OneToMany(mappedBy="professor", fetch=FetchType.EAGER, cascade = CascadeType.ALL )
+	@JsonManagedReference
+	private Set<Disciplina> disciplina;
 	
 	public Professor() {
 		super();
 	}
 
-	public Professor(Long id, String nome, String prontuario, Set<Disciplina> disciplinas) {
+	public Professor(Long id, String nome, String prontuario, Set<Disciplina> disciplina) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.prontuario = prontuario;
-		this.disciplinas = disciplinas;
+		this.disciplina = disciplina;
 	}
 
 
@@ -88,15 +92,15 @@ public class Professor {
 	/**
 	 * @return the disciplinas
 	 */
-	public Set<Disciplina> getDisciplinas() {
-		return this.disciplinas;
+	public Set<Disciplina> getDisciplina() {
+		return this.disciplina;
 	}
 
 	/**
 	 * @param disciplinas the disciplinas to set
 	 */
-	public void setDisciplinas(Set<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
+	public void setDisciplina(Set<Disciplina> disciplina) {
+		this.disciplina = disciplina;
 	}
 
 }

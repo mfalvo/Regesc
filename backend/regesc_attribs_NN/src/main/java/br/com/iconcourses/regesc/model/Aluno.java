@@ -3,6 +3,8 @@ package br.com.iconcourses.regesc.model;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -21,24 +26,29 @@ public class Aluno {
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
 		private Long id;
+		
 		@Column(nullable=false)
 		private String nome;
+		
 		private Integer idade;
-		@OneToMany(mappedBy="aluno", fetch=FetchType.EAGER)
-		@JsonManagedReference(value = "aluno_disciplinaAluno")
-		private Set<DisciplinaAluno> disciplinaAlunos;
+		
+		@ManyToMany(mappedBy = "aluno", fetch=FetchType.EAGER)
+		@JsonIgnore
+		private Set<Disciplina> disciplina;
+		
+		 
 
 
 		public Aluno() {
 			super();
 		}
 		
-		public Aluno(Long id, String nome, Integer idade, Set<DisciplinaAluno> disciplinaAlunos) {
+		public Aluno(Long id, String nome, Integer idade, Set<Disciplina> disciplina) {
 			super();
 			this.id = id;
 			this.nome = nome;
 			this.idade = idade;
-			this.disciplinaAlunos = disciplinaAlunos;
+			this.disciplina = disciplina;
 		}
 
 
@@ -90,15 +100,15 @@ public class Aluno {
 		/**
 		 * @return the disciplinaAlunos
 		 */
-		public Set<DisciplinaAluno> getDisciplinaAlunos() {
-			return disciplinaAlunos;
+		public Set<Disciplina> getDisciplina() {
+			return disciplina;
 		}
 
 		/**
 		 * @param disciplinaAlunos the disciplinaAlunos to set
 		 */
-		public void setDisciplinaAlunos(Set<DisciplinaAluno> disciplinaAlunos) {
-			this.disciplinaAlunos = disciplinaAlunos;
+		public void setDisciplina(Set<Disciplina> disciplina) {
+			this.disciplina = disciplina;
 		}
 		
 }
